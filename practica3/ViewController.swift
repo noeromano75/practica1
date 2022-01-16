@@ -14,25 +14,79 @@ class ViewController: UIViewController {
     @IBOutlet weak var importeTotal: UITextField!
 
     var ListOpciones = [10,15,20]
-    var propinaSeleccionada:Int?
+    var propinaSeleccionada=10
     
     @IBOutlet weak var totalPropina: UILabel!
-    @IBOutlet weak var tableViewm: UITableView!
+    
+    @IBOutlet weak var pickerView: UIPickerView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        tableViewm.dataSource = self
-        tableViewm.delegate = self
+        //tableViewm.dataSource = self
+        //tableViewm.delegate = self
+        
+        pickerView.dataSource=self
+        pickerView.delegate=self
     }
     @IBAction func Calcular(_ sender: Any) {
         print("calcular")
-        /*let total:Double?
-        total = (importeTotal*propinaSeleccionada)/100
-        totalPropina.text = "total: \(total)"*/
+        if let valor = importeTotal.text{
+            //let total = Float(valor * propinaSeleccionada)/100
+            
+            
+            let total = (Int(valor)! + (Int(valor)! * Int(propinaSeleccionada)) / 100)
+            totalPropina.text = "total: \(total)"
+        }
+        
+
+    }
+}
+
+extension ViewController : UIPickerViewDataSource, UIPickerViewDelegate{
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return ListOpciones.count
+    }
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        propinaSeleccionada = ListOpciones[row]
+        print(propinaSeleccionada)
+    }
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return "\(ListOpciones[row])"
     }
 }
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
 extension ViewController: UITableViewDataSource,UITableViewDelegate{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return ListOpciones.count
@@ -45,10 +99,12 @@ extension ViewController: UITableViewDataSource,UITableViewDelegate{
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("\(ListOpciones[indexPath.row])")
+        
         propinaSeleccionada = ListOpciones[indexPath.row]
+        print("\(self.propinaSeleccionada ?? 0)")
     }
 }
+ */
     
     
 
